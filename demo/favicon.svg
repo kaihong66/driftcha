@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Simplified 3×3 mark for 16–32 px; demo/logo.svg is the full 4×4 logo. -->
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c1b26"/>
+      <stop offset="1" stop-color="#121219"/>
+    </linearGradient>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7d73ff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#7d73ff" stop-opacity=".9"/>
+    </linearGradient>
+    <linearGradient id="dot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8a80ff"/>
+      <stop offset="1" stop-color="#cbc5ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7.2" fill="url(#plate)"/>
+  <rect x=".25" y=".25" width="31.5" height="31.5" rx="7" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width=".5"/>
+  <g fill="#5d5c72">
+    <circle cx="7.5" cy="8.5" r="2.5"/><circle cx="24.5" cy="8.5" r="2.5"/>
+    <circle cx="7.5" cy="16" r="2.5"/><circle cx="24.5" cy="16" r="2.5"/>
+    <circle cx="7.5" cy="23.5" r="2.5"/><circle cx="24.5" cy="23.5" r="2.5"/>
+  </g>
+  <g fill="url(#trail)">
+    <rect x="11.2" y="7" width="6.8" height="3" rx="1.5"/>
+    <rect x="11.2" y="14.5" width="6.8" height="3" rx="1.5"/>
+    <rect x="11.2" y="22" width="6.8" height="3" rx="1.5"/>
+  </g>
+  <g fill="url(#dot)">
+    <circle cx="18" cy="8.5" r="2.5"/><circle cx="18" cy="16" r="2.5"/><circle cx="18" cy="23.5" r="2.5"/>
+  </g>
+</svg>

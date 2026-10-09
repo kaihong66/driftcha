@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/
+glyph-samples/
+# Red-team tools stay local by default; remove this line to publish them.
+redteam/

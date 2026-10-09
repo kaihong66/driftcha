@@ -1,0 +1,73 @@
+{
+  "name": "driftcha",
+  "version": "0.2.0",
+  "description": "A motion-defined noise CAPTCHA: every frame is pure static, the digits only exist in motion.",
+  "keywords": [
+    "captcha",
+    "motion",
+    "noise",
+    "canvas",
+    "proof-of-work",
+    "bot-detection"
+  ],
+  "license": "MIT",
+  "author": "kaihong66 (https://github.com/kaihong66)",
+  "homepage": "https://kaihong66.github.io/driftcha/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaihong66/driftcha.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaihong66/driftcha/issues"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./style.css": "./src/driftcha.css",
+    "./server": {
+      "types": "./server/api.d.ts",
+      "default": "./server/api.js"
+    }
+  },
+  "files": [
+    "src",
+    "server",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server/index.js",
+    "serve": "vite build && node server/index.js",
+    "test": "node --test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -p tsconfig.json",
+    "demo:gif": "node scripts/demo-gif.mjs",
+    "glyph-samples": "node scripts/glyph-samples.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.1",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.9",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.3"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

@@ -1,0 +1,30 @@
+name: Solver / difficulty report
+description: Share an automated solver result, or tell us a round is too hard or too easy for people.
+labels: [difficulty]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of report
+      options:
+        - Automated solver (computer vision, ML, …)
+        - Too hard for people
+        - Too easy / readable from a single frame
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Mock server
+        - Browser only
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Approach and success rate for solvers; which round and what made it hard for people.
+    validations:
+      required: true

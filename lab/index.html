@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Driftcha lab</title>
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/svg+xml" href="../demo/favicon.svg" />
+    <link rel="stylesheet" href="./lab.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <a class="brand" href="../"
+        ><img src="../demo/logo.svg" alt="" width="24" height="24" /> Driftcha lab</a
+      >
+      <p>
+        Tune the motion model and test yourself. Every check uses a fresh code, and results are tallied per
+        setting so you can compare how readable each one is for people.
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="stage">
+        <canvas id="view" aria-label="Live noise with the current settings"></canvas>
+        <form id="guess" class="guess" autocomplete="off">
+          <input
+            id="answer"
+            inputmode="numeric"
+            maxlength="4"
+            pattern="[0-9]{4}"
+            placeholder="0000"
+            aria-label="Your reading"
+            required
+          />
+          <button type="submit">Check</button>
+          <button type="button" id="skip" class="ghost">Skip</button>
+          <output id="result" aria-live="polite"></output>
+        </form>
+      </section>
+
+      <aside class="panel">
+        <h2>Presets</h2>
+        <div class="presets" id="presets"></div>
+
+        <h2>Settings</h2>
+        <label class="row">
+          <span>Round</span>
+          <select id="color">
+            <option value="mono">Black-and-white</option>
+            <option value="color">Color</option>
+          </select>
+        </label>
+        <label class="row"
+          ><span>Dot life, min</span><input id="lifeMin" type="range" min="20" max="600" step="10" /><output
+            for="lifeMin"
+          ></output
+        ></label>
+        <label class="row"
+          ><span>Dot life, max</span><input id="lifeMax" type="range" min="20" max="800" step="10" /><output
+            for="lifeMax"
+          ></output
+        ></label>
+        <label class="row"
+          ><span>Noise</span><input id="noise" type="range" min="0" max="0.9" step="0.05" /><output
+            for="noise"
+          ></output
+        ></label>
+        <label class="row"
+          ><span>Jitter</span><input id="jitter" type="range" min="0" max="0.9" step="0.05" /><output
+            for="jitter"
+          ></output
+        ></label>
+        <label class="row"
+          ><span>Distortion</span><input id="distortion" type="range" min="0" max="1" step="0.1" /><output
+            for="distortion"
+          ></output
+        ></label>
+
+        <h2>Your results</h2>
+        <table class="tally">
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>Right</th>
+              <th>Tries</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="tally"></tbody>
+        </table>
+
+        <h2>Stage config</h2>
+        <pre id="config"></pre>
+      </aside>
+    </main>
+
+    <script type="module" src="./lab.js"></script>
+  </body>
+</html>

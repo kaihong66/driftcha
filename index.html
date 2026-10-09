@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Driftcha — motion-defined noise CAPTCHA</title>
+    <meta
+      name="description"
+      content="A CAPTCHA where every frame is pure noise and the digits only exist in motion."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="./demo/favicon.svg" />
+    <link rel="stylesheet" href="./src/driftcha.css" />
+    <link rel="stylesheet" href="./demo/demo.css" />
+  </head>
+  <body>
+    <header class="site-header wrap">
+      <a class="brand" href="./">
+        <img src="./demo/logo.svg" alt="" width="30" height="30" />
+        <span>Driftcha</span>
+      </a>
+      <nav class="site-nav">
+        <a href="#how">How it works</a>
+        <a href="#limits">Modes</a>
+        <a id="source-link" href="#" hidden>GitHub</a>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Open-source CAPTCHA experiment</p>
+          <h1>Every frame is static.<br /><span class="accent">The digits only exist in motion.</span></h1>
+          <p class="lede">
+            Driftcha hides a four-digit code in a field of flickering dots. Freeze any single frame and you
+            get uniform noise. Let it play, and your visual system pulls the digits right out of it.
+          </p>
+          <ul class="checks">
+            <li>Two rounds: black-and-white, then full color</li>
+            <li>Server mode: frames are streamed, the answer never reaches the page</li>
+            <li>Proof-of-work on every button press</li>
+            <li>Zero runtime dependencies, MIT licensed</li>
+          </ul>
+        </div>
+
+        <div class="hero-demo">
+          <div class="mode">
+            <div class="mode-switch" role="radiogroup" aria-label="Where challenges come from">
+              <button type="button" class="mode-option" data-mode="server" role="radio" aria-checked="false">
+                Mock server
+              </button>
+              <button type="button" class="mode-option" data-mode="local" role="radio" aria-checked="false">
+                Browser only
+              </button>
+            </div>
+            <p id="mode-note" class="mode-note"></p>
+          </div>
+          <div id="captcha"></div>
+          <section class="events" aria-labelledby="events-title">
+            <h2 id="events-title">Callback events</h2>
+            <ol id="events" class="events-list">
+              <li class="events-empty">Pass or miss a round to see the widget's callbacks here.</li>
+            </ol>
+          </section>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>
+            Every pixel is a dot that lives for a fraction of a second. The background is cut into patches
+            that drift in random directions; inside each digit the dots drift the same speed, another way.
+          </p>
+        </div>
+
+        <div class="figures" id="explainer">
+          <figure class="fig">
+            <canvas data-fig="still" role="img" aria-label="A single frozen frame: uniform noise"></canvas>
+            <figcaption>
+              <span class="fig-no">Fig. 1</span>
+              <b>One frame.</b> Freeze it and there is nothing to find. No pixel, region or color differs from
+              the rest.
+            </figcaption>
+          </figure>
+          <figure class="fig">
+            <canvas data-fig="live" role="img" aria-label="The same noise, playing"></canvas>
+            <figcaption>
+              <span class="fig-no">Fig. 2</span>
+              <b>In motion.</b> The same dots, playing. Four digits surface the moment they move.
+            </figcaption>
+          </figure>
+          <figure class="fig">
+            <canvas
+              data-fig="flow"
+              role="img"
+              aria-label="The same noise tinted by direction of motion; the digits stand out"
+            ></canvas>
+            <figcaption>
+              <span class="fig-no">Fig. 3</span>
+              <b>Tinted by direction.</b> What your eyes work out on their own: the digits drift against the
+              patches around them. Background muted for clarity.
+            </figcaption>
+          </figure>
+        </div>
+        <div class="fig-tools">
+          <button type="button" id="explainer-shuffle">New sample</button>
+          <span
+            >Rendered live in your browser by the same engine. Fig. 3 uses the engine's ground truth.</span
+          >
+        </div>
+
+        <h3 class="sub">Defenses</h3>
+        <dl class="specs">
+          <div class="spec">
+            <dt>Uniform frames</dt>
+            <dd>
+              Digits and background share dot speed, lifetime, color and direction statistics, so no per-pixel
+              measurement points at the code.
+            </dd>
+            <dd class="spec-where">engine</dd>
+          </div>
+          <div class="spec">
+            <dt>Readable shapes</dt>
+            <dd>
+              Digits stay upright and unwarped. Bending them only trips weak OCR, while people squint. A 1 is
+              always a single bar, so it never reads as a 7.
+            </dd>
+            <dd class="spec-where">engine</dd>
+          </div>
+          <div class="spec">
+            <dt>Proof of work</dt>
+            <dd>
+              Each press of Verify or New code first solves four SHA-256 puzzles in a Web Worker. Every miss
+              in the last minute doubles the work.
+            </dd>
+            <dd class="spec-where">client + server</dd>
+          </div>
+          <div class="spec">
+            <dt>Typed, not pasted</dt>
+            <dd>
+              Only trusted keystrokes count, one digit each. Paste, drop, autocorrect and scripted input are
+              rejected, and the typing rhythm gets a sanity check.
+            </dd>
+            <dd class="spec-where">client</dd>
+          </div>
+          <div class="spec">
+            <dt>Answer stays home</dt>
+            <dd>
+              In mock-server mode the code, the rendering and the checks never leave the server. A solved
+              session earns a signed, single-use pass token.
+            </dd>
+            <dd class="spec-where">server</dd>
+          </div>
+        </dl>
+
+        <h3 class="sub" id="limits">Two modes</h3>
+        <div class="modes-wrap">
+          <table class="modes" id="modes-table">
+            <thead>
+              <tr>
+                <th scope="col"><span class="visually-hidden">Property</span></th>
+                <th scope="col" data-col="local">Browser only</th>
+                <th scope="col" data-col="server">Mock server</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Code lives in</th>
+                <td data-col="local">page memory</td>
+                <td data-col="server">server memory</td>
+              </tr>
+              <tr>
+                <th scope="row">Frames rendered by</th>
+                <td data-col="local">the browser</td>
+                <td data-col="server">the server, streamed at 30 fps</td>
+              </tr>
+              <tr>
+                <th scope="row">Answers and proofs checked by</th>
+                <td data-col="local">the browser</td>
+                <td data-col="server">the server</td>
+              </tr>
+              <tr>
+                <th scope="row">Pass token for your backend</th>
+                <td data-col="local" class="muted">none</td>
+                <td data-col="server">HMAC-signed, single use</td>
+              </tr>
+              <tr>
+                <th scope="row">Works on static hosting</th>
+                <td data-col="local">yes</td>
+                <td data-col="server" class="muted">no, needs Node.js</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fineprint">
+          Browser-only mode suits demos and static sites; any script on the page can read its answer. The mock
+          server has the right shape for production but keeps state in memory with simple limits. Either way,
+          treat Driftcha as a speed bump: in our tests a short motion-analysis script cut the digits out of
+          the stream in seconds, and settings that stopped it also stopped people. Read the security model in
+          the README before relying on it.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap">
+      <span>Driftcha · MIT License</span>
+      <span>Probably the most over-engineered CAPTCHA in the observable universe.</span>
+    </footer>
+
+    <script type="module" src="./demo/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  // Type-checks the hand-written declarations against a usage sample (npm run typecheck).
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": false
+  },
+  "files": ["src/index.d.ts", "server/api.d.ts", "test-d/usage.ts"]
+}

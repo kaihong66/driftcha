@@ -1,0 +1,232 @@
+:root {
+  --bg: #0b0b10;
+  --panel: #13131a;
+  --border: #262631;
+  --fg: #ececf2;
+  --muted: #9b9bab;
+  --accent: #9b91ff;
+  --ok: #3ad17e;
+  --bad: #ff7676;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font:
+    15px/1.5 system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 24px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bar p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+  padding: 24px;
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #000;
+}
+
+.guess {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.guess input {
+  width: 9em;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--fg);
+  font:
+    600 20px/1 ui-monospace,
+    Consolas,
+    monospace;
+  letter-spacing: 0.2em;
+}
+
+button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #11101c;
+  font: 600 14px/1 inherit;
+  cursor: pointer;
+}
+
+button.ghost {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+}
+
+#result {
+  font-weight: 600;
+}
+
+#result.ok {
+  color: var(--ok);
+}
+
+#result.bad {
+  color: var(--bad);
+}
+
+.panel {
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  align-self: start;
+}
+
+.panel h2 {
+  margin: 18px 0 10px;
+  color: var(--muted);
+  font:
+    600 11px/1 ui-monospace,
+    Consolas,
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.panel h2:first-child {
+  margin-top: 0;
+}
+
+.presets {
+  display: grid;
+  gap: 6px;
+}
+
+.presets button {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  text-align: left;
+}
+
+.presets button small {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 7.5em minmax(0, 1fr) 4.5em;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.row output {
+  color: var(--muted);
+  font:
+    13px ui-monospace,
+    Consolas,
+    monospace;
+  text-align: right;
+}
+
+.row select {
+  grid-column: span 2;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.tally {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tally th,
+.tally td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.tally td:not(:first-child),
+.tally th:not(:first-child) {
+  text-align: right;
+}
+
+.tally td:first-child {
+  font:
+    12px ui-monospace,
+    Consolas,
+    monospace;
+  word-break: break-all;
+}
+
+pre {
+  margin: 0;
+  padding: 10px;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--muted);
+  font:
+    12px/1.5 ui-monospace,
+    Consolas,
+    monospace;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
